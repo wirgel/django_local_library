@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Author: {{ author.last_name }}, {{ author.first_name }}</h1>
+
+  <p>
+    {{ author.date_of_birth }} -
+    {{ author.date_of_death }}
+  </p>
+
+  <div class="ms-4 mt-4">
+    <h4>Books</h4>
+
+    {% for book in author.book_set.all %}
+      <p>
+        <strong><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></strong>
+        {% if book.bookinstance_set.count > 0 %}
+          ({{ book.bookinstance_set.count }})
+        {% endif %}
+        <br>
+        {{ book.summary }}
+      </p>
+    {% empty %}
+      <p>No books available for this author.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
