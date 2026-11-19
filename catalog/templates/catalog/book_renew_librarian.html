@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Renew: {{ book_instance.book.title }}</h1>
+  <p>Borrower: {{ book_instance.borrower }}</p>
+  <p {% if book_instance.is_overdue %} class="text-danger"{% endif %} >Due date: {{ book_instance.due_back }}</p>
+
+  <form action="" method="post">
+    {% csrf_token %}
+    <div>
+      <label for="id_renewal_date">Renewal date:</label>
+      <div class="helptext" id="id_renewal_date_helptext">
+        Enter a date between now and 4 weeks (default 3).
+      </div>
+      <ul class="error-list" id="id_renewal_date_error">
+        <li>Invalid date - renewal in past</li>
+      </ul>
+      <input
+        type="text"
+        name="renewal_date"
+        value="2023-11-08"
+        required
+        aria-invalid="true"
+        aria-describedby="id_renewal_date_helptext id_renewal_date_error"
+        id="id_renewal_date" />
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}
